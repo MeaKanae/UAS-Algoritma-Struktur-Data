@@ -101,7 +101,7 @@ void addNewAccountMenu(Account *account);
 Account* minValueNode(Account *root);
 Account *deleteNode(Account *root, Account *currentUser, char* key, int *flag);
 void removeAccountMenu(Account *root, Account *currentUser);
-
+void searchAccountMenu(Account *accountList);
 
 Shelf createShelf(int cap);
 int parent(int i);
@@ -129,13 +129,13 @@ void updateBookFile(Book *bookList, int size);
 
 
 void addNewBorrow(BorrowList *borrowList, char* name, int NIM, char* title, int ref_number, char* status, Date borrow, Date due);
-void fetchBorrowData(BorrowList *borrowList, Account account);
+void fetchBorrowData(BorrowList *borrowList, Account *account);
 int checkDuplicate(char* target, BorrowBook *bookList, int size);
-void updateBorrowFile(BorrowList borrowList, Account user);
-void borrowBook(Shelf *shelf, Date dateNow, Account user, BorrowList *borrowList);
+void updateBorrowFile(BorrowList borrowList, Account *user);
+void borrowBook(Shelf *shelf, Date dateNow, Account *user, BorrowList *borrowList);
 void showAllBorrow(BorrowList borrowList);
-void updateBorrowData(BorrowList *borrowList, Account user, Date date);
-void returnBookMenu(BorrowList *borrowList, Account user);
+void updateBorrowData(BorrowList *borrowList, Account *user, Date date);
+void returnBookMenu(BorrowList *borrowList, Account *user);
 
 
 void freeMemory(Shelf *shelf, BorrowList *borrowList);
@@ -531,7 +531,43 @@ void removeAccountMenu(Account *root, Account *currentUser){
     }
 }
 
+void searchAccountMenu(Account *accountList){
+    char email[40];
+    fflush(stdin);
+    printf("=======================================\n");
+    printf("             Search Account            \n");
+    printf("=======================================\n");
+    printf("Email: ");
+    scanf("%[^\n]",email);
+    fflush(stdin);
 
+    Account *ptr = accountList;
+    while(ptr != NULL){
+        if (strcmp(email,ptr->email) < 0){
+            ptr = ptr->left;
+        }
+        else if (strcmp(email,ptr->email) > 0){
+            ptr = ptr->right;
+        }
+        else{
+            break;
+        }
+    }
+
+    if (ptr != NULL){
+        printf("\nAccount found!\n");
+        printf("Name      : %s\n", ptr->name);
+        printf("NIM       : %d\n", ptr->NIM);
+        printf("Email     : %s\n", ptr->email);
+        printf("User Type : %s\n", ptr->userType);
+    }
+    else{
+        printf("Account not found!\n");
+    }
+
+    printf("\n");
+
+}
 
 //========================================================================================================
 //                                          Book Management
@@ -842,7 +878,7 @@ void showAllBook(Shelf shelf){
                 int foundIndex = binarySearch(searchBook, bookList, shelf.heapSize, strcmp(SortingMode, "ASCENDING") == 0? "ASCENDING" : "DESCENDING");
                 if (foundIndex != -1){
                     printf("\nBook found!\n");
-                    printf("Title: %s\nAuthor: %s\nPublisher: %s\nRef. Number: %d\nRelease: %d\nStock: %d\nAvaiable: %d\n",bookList[foundIndex].title, bookList[foundIndex].author, bookList[foundIndex].publisher, bookList[foundIndex].ref_number, bookList[foundIndex].release, bookList[foundIndex].stock, bookList[foundIndex].avaiable);
+                    printf("Title: %s\nAuthor: %s\nPublisher: %s\nRef. Number: %d\nRelease: %d\nStock: %d\nAvaiable: %d\n\n",bookList[foundIndex].title, bookList[foundIndex].author, bookList[foundIndex].publisher, bookList[foundIndex].ref_number, bookList[foundIndex].release, bookList[foundIndex].stock, bookList[foundIndex].avaiable);
                 }
                 else{
                     printf("Book not found\n");
@@ -866,7 +902,7 @@ void showAllBook(Shelf shelf){
                 int foundIndex = interpolationSearch(searchBook, bookList, shelf.heapSize);
                 if (foundIndex != -1){
                     printf("\nBook found!\n");
-                    printf("Title: %s\nAuthor: %s\nPublisher: %s\nRef. Number: %d\nRelease: %d\nStock: %d\nAvaiable: %d\n",bookList[foundIndex].title, bookList[foundIndex].author, bookList[foundIndex].publisher, bookList[foundIndex].ref_number, bookList[foundIndex].release, bookList[foundIndex].stock, bookList[foundIndex].avaiable);
+                    printf("Title: %s\nAuthor: %s\nPublisher: %s\nRef. Number: %d\nRelease: %d\nStock: %d\nAvaiable: %d\n\n",bookList[foundIndex].title, bookList[foundIndex].author, bookList[foundIndex].publisher, bookList[foundIndex].ref_number, bookList[foundIndex].release, bookList[foundIndex].stock, bookList[foundIndex].avaiable);
                 }
                 else{
                     printf("Book not found\n");
@@ -1021,7 +1057,7 @@ void addNewBorrow(BorrowList *borrowList, char* name, int NIM, char* title, int 
     borrowList->book[borrowList->size-1].due.year = due.year;
 }
 
-void fetchBorrowData(BorrowList *borrowList, Account account){
+void fetchBorrowData(BorrowList *borrowList, Account *account){
     char userType[8];
     char email[40];
     char password[30];
@@ -1036,8 +1072,8 @@ void fetchBorrowData(BorrowList *borrowList, Account account){
     Date borrow, due;
     FILE *fp;
 
-    if (strcmp(account.userType, "STUDENT") == 0){
-        sprintf(NIM_file, "%d", account.NIM);
+    if (strcmp(account->userType, "STUDENT") == 0){
+        sprintf(NIM_file, "%d", account->NIM);
         //itoa(account.NIM, NIM_file, 10);
         strcpy(filename, NIM_file);
         strcat(filename, "-Borrowing data.txt");
@@ -1075,7 +1111,7 @@ int checkDuplicate(char* target, BorrowBook *bookList, int size){
     return 0;
 }
 
-void updateBorrowFile(BorrowList borrowList, Account user){
+void updateBorrowFile(BorrowList borrowList, Account *user){
     if (borrowList.size == 0){
         return;
     }
@@ -1089,8 +1125,8 @@ void updateBorrowFile(BorrowList borrowList, Account user){
 
     char name[30];
 
-    if (strcmp(user.userType, "STUDENT") == 0){
-        sprintf(userNIM, "%d", user.NIM);
+    if (strcmp(user->userType, "STUDENT") == 0){
+        sprintf(userNIM, "%d", user->NIM);
         //itoa(user.NIM, userNIM, 10);
         strcpy(fileName, userNIM);
         strcat(fileName,"-Borrowing data.txt");
@@ -1133,7 +1169,7 @@ void updateBorrowFile(BorrowList borrowList, Account user){
     }
 }
 
-void borrowBook(Shelf *shelf, Date dateNow, Account user, BorrowList *borrowList){
+void borrowBook(Shelf *shelf, Date dateNow, Account *user, BorrowList *borrowList){
     printf("=======================================\n");
     printf("              Borrow Book              \n");
     printf("=======================================\n");
@@ -1170,7 +1206,7 @@ void borrowBook(Shelf *shelf, Date dateNow, Account user, BorrowList *borrowList
         //Sequential Search
         if (checkDuplicate(bookList[foundIndex].title, borrowList->book, borrowList->size) == 0){
             Date dateDue = addTime(dateNow, 7);
-            addNewBorrow(borrowList, user.name, user.NIM, bookList[foundIndex].title, bookList[foundIndex].ref_number, "Borrowing", dateNow, dateDue);
+            addNewBorrow(borrowList, user->name, user->NIM, bookList[foundIndex].title, bookList[foundIndex].ref_number, "Borrowing", dateNow, dateDue);
             updateBorrowFile(*borrowList, user);
 
             bookList[foundIndex].avaiable -= 1;
@@ -1212,7 +1248,7 @@ void showAllBorrow(BorrowList borrowList){
     }
 }
 
-void updateBorrowData(BorrowList *borrowList, Account user, Date date){
+void updateBorrowData(BorrowList *borrowList, Account *user, Date date){
     bool isChanged = false;
     double time_remaining;
 
@@ -1228,7 +1264,7 @@ void updateBorrowData(BorrowList *borrowList, Account user, Date date){
     }
 }
 
-void returnBookMenu(BorrowList *borrowList, Account user){
+void returnBookMenu(BorrowList *borrowList, Account *user){
     int index = 0;
 
     showAllBorrow(*borrowList);
@@ -1288,7 +1324,7 @@ int studentPage(Account *user){
     BorrowList borrowList;
     borrowList.book = malloc(sizeof(BorrowBook));
     borrowList.size = 0;
-    fetchBorrowData(&borrowList, *user);
+    fetchBorrowData(&borrowList, user);
 
     int option;
     while(1){
@@ -1311,13 +1347,13 @@ int studentPage(Account *user){
 
         if (option == 0){
             setDate(&date);
-            updateBorrowData(&borrowList, *user, date);
+            updateBorrowData(&borrowList, user, date);
         }
         else if (option == 1){
             showAllBook(shelf);
         }
         else if (option == 2){
-            borrowBook(&shelf, date, *user, &borrowList);
+            borrowBook(&shelf, date, user, &borrowList);
         }
         else if (option == 3){
             showAllBorrow(borrowList);
@@ -1352,7 +1388,7 @@ void adminPage(Account *user, Account *accountList){
     BorrowList borrowList;
     borrowList.book = malloc(sizeof(BorrowBook));
     borrowList.size = 0;
-    fetchBorrowData(&borrowList, *user);
+    fetchBorrowData(&borrowList, user);
 
     int option;
     while(1){
@@ -1368,10 +1404,11 @@ void adminPage(Account *user, Account *accountList){
         printf("[3] Remove a book\n");
         printf("[4] Show loan list\n");
         printf("[5] Return loan book\n");
-        printf("[6] Add new account\n");
-        printf("[7] Remove an account\n");
-        printf("[8] Log out\n");
-        printf("[9] Exit\n");
+        printf("[6] Search account\n");
+        printf("[7] Add new account\n");
+        printf("[8] Remove an account\n");
+        printf("[9] Log out\n");
+        printf("[10] Exit\n");
         printf("[0] Change current time (for debugging)\n");
         printf("\nOption: ");
         scanf("%d",&option);
@@ -1379,7 +1416,7 @@ void adminPage(Account *user, Account *accountList){
 
         if (option == 0){
             setDate(&date);
-            updateBorrowData(&borrowList, *user, date);
+            updateBorrowData(&borrowList, user, date);
         }
         else if (option == 1){
             showAllBook(shelf);
@@ -1394,20 +1431,23 @@ void adminPage(Account *user, Account *accountList){
             showAllBorrow(borrowList);
         }
         else if (option == 5){
-            returnBookMenu(&borrowList, *user);
+            returnBookMenu(&borrowList, user);
         }
         else if (option == 6){
-            addNewAccountMenu(accountList);
+            searchAccountMenu(accountList);
         }
         else if (option == 7){
+            addNewAccountMenu(accountList);
+        }
+        else if (option == 8){
             removeAccountMenu(accountList, user);
         }
 
-        else if (option == 8){
+        else if (option == 9){
             freeMemory(&shelf, &borrowList);
             break;
         }
-        else if (option == 9){
+        else if (option == 10){
             freeMemory(&shelf, &borrowList);
             freeAccount(accountList);
             exit(0);
