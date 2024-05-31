@@ -462,7 +462,7 @@ Account* minValueNode(Account *root){
     Account *curr = root, *parent = NULL;
 
     while(curr != NULL){
-        printf("check\n");
+        //printf("check\n");
         parent = curr;
         curr = curr->left;
     }
@@ -500,6 +500,10 @@ Account *deleteNode(Account *root, Account *currentUser, char* key, int *flag){
 
         Account *temp = minValueNode(root->right);
         strcpy(root->email, temp->email);
+        strcpy(root->name, temp->name);
+        root->NIM = temp->NIM;
+        strcpy(root->password, temp->password);
+        strcpy(root->userType, temp->userType);
         root->right = deleteNode(root->right, currentUser, temp->email, flag);
         *flag = 1;
     }
@@ -695,10 +699,14 @@ void decreaseKey(Shelf *mHeap, int i, char* newValue){
 
 void deleteKey(Shelf *mHeap, int index){
     char a[2];
+
     a[0] = 0;
     a[1] = '\0';
 
+    //ganti title nya jadi "(null)", trs angkat ke root
     decreaseKey(mHeap, index, a);
+
+    //hapus root
     extractMin(mHeap);
 }
 
@@ -832,7 +840,7 @@ void showAllBook(Shelf shelf){
     Book bookList[temp.heapSize];
     int i = 0;
     while(temp.heapSize > 0){
-        bookList[i] = extractMin(&temp);
+        bookList[i] = extractMin(&temp); //ini data yng udh urut awalnya ascending
         i++;
     }
     free(temp.book);
@@ -996,10 +1004,10 @@ void removeBookMenu(Shelf *shelf){
 
     int found = 0;
 
-    for(int i = 0; i < shelf->heapSize; i++){
-        if (strcmp(target, shelf->book[i].title) == 0){
+    for(int i = 0; i < shelf->heapSize; i++){//Iterasi dari index 0 sampe ketemu
+        if (strcmp(target, shelf->book[i].title) == 0){//Kalo ketemu
             found = 1;
-            deleteKey(shelf, i);
+            deleteKey(shelf, i); //masuk ke sini dulu
 
             Shelf temp = copyShelf(*shelf);
             Book bookList[shelf->heapSize];
