@@ -1,20 +1,20 @@
-5 Cm#Donny Dhirgantoro#Grasindo#10006#2005#4#4
-Aroma Karsa#Dee Lestari#Bentang Pustaka#10008#2018#3#3
-Ayat-Ayat Cinta#Habiburrahman E.#Republika#10009#2004#4#4
-Bumi Manusia#Pramoedya A. T.#Lentera Dipan#10004#1980#2#2
-Cantik Itu Luka#Eka Kurniawan#Gramedia#10005#2002#3#3
-Edensor#Andrea Hirata#Bentang Pustaka#10015#2007#3#3
 Harry Potter#J.K. Rowling#Gramedia#10019#1997#4#4
-Laskar Pelangi#Andrea Hirata#Bentang Pustaka#10001#2005#3#3
-Maryamah Karpov#Andrea Hirata#Bentang Pustaka#10016#2008#4#4
+Aroma Karsa#Dee Lestari#Bentang Pustaka#10008#2018#3#3
 Negeri 5 Menara#A. Fuadi#Gramedia#10002#2009#4#4
-Perahu Kertas#Dee Lestari#Bentang Pustaka#10003#2009#5#5
-Pulang#Leila S. Chudori#Gramedia#10010#2012#5#5
-Rindu#Tere Liye#Republika#10011#2014#2#2
-Ronggeng Dukuh#Ahmad Tohari#Gramedia#10013#1982#4#4
-Sang Alkemis#Paulo Coelho#Gramedia#10018#1994#3#3
+Ayat-Ayat Cinta#Habiburrahman E.#Republika#10009#2004#4#4
+5 Cm#Donny Dhirgantoro#Grasindo#10006#2005#4#4
+Laskar Pelangi#Andrea Hirata#Bentang Pustaka#10001#2005#3#3
 Sang Pemimpi#Andrea Hirata#Bentang Pustaka#10014#2006#5#5
+Cantik Itu Luka#Eka Kurniawan#Gramedia#10005#2002#3#3
+Bumi Manusia#Pramoedya A. T.#Lentera Dipan#10004#1980#2#2
+Rindu#Tere Liye#Republika#10011#2014#2#2
 Senja di Jakarta#Muchtar Lubis#Balai Pustaka#10012#1970#3#3
+Edensor#Andrea Hirata#Bentang Pustaka#10015#2007#3#3
+Pulang#Leila S. Chudori#Gramedia#10010#2012#5#5
+Ronggeng Dukuh#Ahmad Tohari#Gramedia#10013#1982#4#4
 Sepatu Dahlan#Khrisna Pabichara#Noura Books#10017#2012#5#5
+Maryamah Karpov#Andrea Hirata#Bentang Pustaka#10016#2008#4#4
+Perahu Kertas#Dee Lestari#Bentang Pustaka#10003#2009#5#5
+Sang Alkemis#Paulo Coelho#Gramedia#10018#1994#3#3
 Supernova#Dee Lestari#Bentang Pustaka#10007#2001#5#5
 Twilight#Stephenie Meyer#Gramedia#10020#2005#5#5
